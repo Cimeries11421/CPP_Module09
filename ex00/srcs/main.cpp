@@ -2,16 +2,11 @@
 
 int main(int ac, char **av)
 {
+	Exchange	base;
 	(void)ac;
-	try
-	{
-		Exchange	base(av[1]);
-		if (base.fillBase() == -1)
-			return (-1);
-	}
-	catch (std::exception &ref)
-	{
-		std::cout << ref.what() << std::endl;
-	}
+	(void)av;
+
+	base.printBase();
+
 	return (0);
 }

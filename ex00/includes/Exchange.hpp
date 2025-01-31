@@ -12,14 +12,13 @@ class	Exchange
 	private :
 		std::map<std::string, float>	_base;
 		std::ifstream					_file;
-		Exchange();
 		Exchange(const Exchange &other);
 		Exchange	&operator=(const Exchange &other);
 	
 	public :
-		Exchange(char *file);
+		Exchange();
 		~Exchange();
-		int	fillBase(void);
+		void	fillBase(void);
 		int	checkDate(std::string &date);
 		class	ErrorOpen : public std::exception
 		{
@@ -28,6 +27,7 @@ class	Exchange
 				return ("File can't be open");
 			}
 		};
+		void	printBase(void);
 };
 
 #endif
