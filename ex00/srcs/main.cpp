@@ -1,4 +1,5 @@
 #include "Exchange.hpp"
+#include "utils.hpp"
 
 int main(int ac, char **av)
 {
@@ -6,7 +7,16 @@ int main(int ac, char **av)
 	(void)ac;
 	(void)av;
 
-	base.printBase();
+	base.printBase(); //a enlever
+	try
+	{
+		searchBase(av[1], base);
+	}
+	catch (std::exception &ref)
+	{
+		std::cout << ref.what() << std::endl;
+	}
+
 
 	return (0);
 }

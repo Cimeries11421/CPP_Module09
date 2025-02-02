@@ -43,14 +43,32 @@ void	Exchange::fillBase(void)
 	}
 }
 
+
+//renvoie la plus grande date - 1 pour avoir l'inferieur ou l'egale
+std::string	Exchange::findCloserDate(const std::string &key)
+{
+	std::map<std::string, float>::iterator	posDate;
+
+	posDate = _base.upper_bound(key);
+	if (posDate != _base.begin())
+		--posDate;
+	else
+		throw NoEquivalentDate();
+	return (posDate->first);
+}
+
+float	Exchange::operator[](const std::string &key)
+{
+	return (_base[key]);
+}
+
 void	Exchange::printBase(void)
 {
 	std::map<std::string, float>::iterator	it = _base.begin();
 	std::map<std::string, float>::iterator	it_end = _base.end();
 	while (it != it_end)
 	{
-		std::cout << 
-	//	std::cout << it->first << " : "<< it->second <<  std::endl;
+		std::cout << it->first << " : "<< it->second <<  std::endl;
 		++it;
 	}
 }

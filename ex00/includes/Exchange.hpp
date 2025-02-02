@@ -7,6 +7,15 @@
 #include <fstream>
 #include <cstdlib>
 
+class	ErrorOpen : public std::exception
+		{
+			const char* what() const throw()
+			{
+				return ("File can't be open");
+			}
+		};
+
+
 class	Exchange
 {
 	private :
@@ -18,15 +27,17 @@ class	Exchange
 	public :
 		Exchange();
 		~Exchange();
-		void	fillBase(void);
-		int	checkDate(std::string &date);
-		class	ErrorOpen : public std::exception
+		void		fillBase(void);
+		std::string	findCloserDate(const std::string &key);
+		float	operator[](const std::string &key);
+		class	NoEquivalentDate : public std::exception
 		{
 			const char* what() const throw()
 			{
-				return ("File can't be open");
+				return ("There is no inferior or equivalent date");
 			}
 		};
+
 		void	printBase(void);
 };
 
