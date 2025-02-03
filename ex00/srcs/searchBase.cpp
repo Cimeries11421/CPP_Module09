@@ -11,9 +11,10 @@ static int	checkFormat(const std::string &str)
 			return (-1);
 		if (i == 11 && str[i] != '|')
 			return (-1);
-		else if (((i >= 0 && i < 4) || i == 5 || i == 6 || i == 8 || i == 9 || i >= 13)
-				&& str[i] < '0' || str[i] > '9')
+		else if (((i >= 0 && i < 4) || i == 5 || i == 6 || i == 8 || i == 9 ) && (str[i] < '0' || str[i] > '9'))
+		{
 			return (-1);
+		}
 	}
 	return (0);
 }
