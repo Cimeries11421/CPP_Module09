@@ -15,7 +15,6 @@ class	ErrorOpen : public std::exception
 			}
 		};
 
-
 class	Exchange
 {
 	private :
@@ -40,5 +39,7 @@ class	Exchange
 
 		void	printBase(void);
 };
+
+void	searchBase(char	*inputFile, Exchange &base);
 
 #endif

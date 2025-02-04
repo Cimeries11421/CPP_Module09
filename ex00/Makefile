@@ -1,4 +1,4 @@
-NAME = template
+NAME = btc
 
 CXX = c++
 
