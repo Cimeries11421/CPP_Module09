@@ -69,4 +69,3 @@ void	Exchange::printBase(void)
 		++it;
 	}
 }
-

@@ -56,7 +56,7 @@ static int	checkFormat(const std::string &str)
 			return (-1);
 		if (i == 11 && str[i] != '|')
 			return (-1);
-		if (((i >= 0 && i < 4) || i == 5 || i == 6 || i == 8 || i == 9 || i == 13) && (str[i] < '0' || str[i] > '9'))
+		if ((i < 4 || i == 5 || i == 6 || i == 8 || i == 9 || i == 13) && (str[i] < '0' || str[i] > '9'))
 			return (-1);
 		if (i == 14 && (str[i] != '.' && (str[i] < '0' || str[i] > '9' )))
 			return (-1);
@@ -80,9 +80,9 @@ static int	checkDate(const std::string &date)
 		return (-1);
 	if (day > 31)
 		return (-1);
-	if (year == 2 && year % 4 != 0 && day > 28)
+	if (month == 2 && year % 4 != 0 && day > 28)
 		return (-1);
-	if (year == 2 && day > 29)
+	if (month == 2 && day > 29)
 		return (-1);
 	return (-0);
 }
