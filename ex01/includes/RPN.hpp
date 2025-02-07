@@ -3,6 +3,9 @@
 
 #include <stack>
 #include <cstdlib>
+#include <string>
+
+int	parseInput(const std::string &str);
 
 class	RPN
 {

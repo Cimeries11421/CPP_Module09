@@ -5,7 +5,8 @@ CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -Iincludes -std=c++98
 
 SRCS = main.cpp \
-	   RPN.cpp
+	   RPN.cpp \
+	   parseInput.cpp \
 
 SRC = $(addprefix srcs/, $(SRCS))
 
