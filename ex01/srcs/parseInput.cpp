@@ -1,15 +1,34 @@
 #include "RPN.hpp"
+#include <iostream>
 
 int	parseInput(const std::string &str)
 {
-	for (size_t i = 0; i < str.size(); ++i)
+	size_t	i = 0;
+	int count_nbr = 0;
+	int count_op = 0;
+	//int	flag = 0;
+
+	while (str[i] == ' ')
+		++i;
+	while (i < str.size())
 	{
-		if (i == '1' && (str.at(i) < '0' || str.at(i) > '9'))
+		if ((str[i] < '0' || str[i] > '9') && str[i] != '+' && str[i] != '-' && str[i] != '*' && str[i] != '/'
+				&& str[i] != ' ')
 			return (-1);
-		if (str.at(i) != '1' && i % 2 != 0 && (str.at(i) != '+' && str.at(i) != '-' && str.at(i) != '*' && str.at(i) != '/'))
+		if (str[i] >= '0' && str[i] <= '9')
+		{
+			count_nbr++;
+		}
+		if (str[i] == '+' || str[i] == '-' || str[i] == '*' || str[i] == '/')
+		{
+			count_op++;
+		}
+		if (count_op >= count_nbr)
 			return (-1);
-		if (i % 2 == 0 && (str.at(i) < '0' || str.at(i) > '9'))
-			return (-1);
+		++i;
 	}
+	count_nbr -= count_op;
+	if (count_nbr != 1)
+		return (-1);
 	return (0);
 }
