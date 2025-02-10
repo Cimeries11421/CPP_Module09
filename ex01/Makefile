@@ -1,4 +1,4 @@
-NAME = btc
+NAME = RPN
 
 CXX = c++
 

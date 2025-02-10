@@ -6,7 +6,6 @@ int	parseInput(const std::string &str)
 	size_t	i = 0;
 	int count_nbr = 0;
 	int count_op = 0;
-	//int	flag = 0;
 
 	while (str[i] == ' ')
 		++i;

@@ -5,21 +5,19 @@
 int	main(int ac, char **av)
 {
 	RPN	stack;
-	std::string	strClass(av[1]);
-	char	*str;
+	std::string	str(av[1]);
 
 	if (ac != 2)
 	{
 		std::cout << "Need ONE argument" << std::endl;
 		return (1);
 	}
-	if (parseInput(strClass) == -1)
+	if (parseInput(str) == -1)
 	{
 		std::cout << "Wrong Input" << std::endl;
 		return (-1);
 	}
-	str = av[1];
-	for (size_t i = 0; i < strlen(str); ++i)
+	for (size_t i = 0; i < str.size(); ++i)
 	{
 		if (str[i] >= '0' && str[i] <= '9')
 			stack.addNumberStack(&str[i]);
