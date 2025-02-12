@@ -9,12 +9,12 @@ int	main(int ac, char **av)
 
 	if (ac != 2)
 	{
-		std::cout << "Need ONE argument" << std::endl;
+		std::cerr << "Need ONE argument" << std::endl;
 		return (1);
 	}
 	if (parseInput(str) == -1)
 	{
-		std::cout << "Wrong Input" << std::endl;
+		std::cerr << "Wrong Input" << std::endl;
 		return (-1);
 	}
 	for (size_t i = 0; i < str.size(); ++i)
