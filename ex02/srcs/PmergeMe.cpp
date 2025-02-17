@@ -59,25 +59,43 @@ void PmergeMe<T>::sortNbr(size_t lvl)
     }
 	std::cout << "PARTIE 1 -> level : " << lvl << std::endl;
     this->printList();
-	if (lvl * 2 <= _listNbr.size())
+	if (_listNbr.size() / (lvl * 2) >= 2) // taille /  next lvl > 2, alors capacite d'un autre.
 		this->sortNbr(lvl * 2);	
 	std::cout << "PARTIE 2 -> level : " << lvl << std::endl;
-	
+
+	// fill main, pend
+	// manque le odd
+
 	x = lvl - 1;
 	y = lvl * 2 - 1;
-	_main.push_back(x);
-	x += lvl * 2;
+	_main.clear();
+	_pend.clear();
+	_odd.clear();
+	_main.push_back(_listNbr[x]);
 	while (y < _listNbr.size())
 	{
-		std::cout << "y = " << y << std::endl;
-		_main.push_back(y);
-		_pend.push_back(x);
-
+		_main.push_back(_listNbr[y]);
+		y += lvl * 2;
+		if (x > lvl - 1)
+			_pend.push_back(_listNbr[x]);
 		x += lvl * 2;
-        y += lvl * 2;
+
 	}
-	this->printMainPend();
+	size_t i = x;
+	while (i < _listNbr.size())
+	{
+		_odd.push_back(_listNbr[i]);
+		i += lvl;
+	}
+	this->printMainPend(); // a enlever	
+						   
+	//binary insertion
 	
+	/* typename T::iterator	it = _listNbr.begin();
+	 typename T::iterator	it_end = _listNbr.end();
+
+	 while (it != it_end)*/
+
 }
 
 template<typename T>
@@ -97,16 +115,24 @@ void PmergeMe<T>::printMainPend(void)
 	std::cout << "Main : ";
     for (size_t i = 0; i < _main.size(); ++i)
     {
-        std::cout << _listNbr[i] << " ";
+        std::cout << _main[i] << " ";
     }
     std::cout << std::endl;
 
 	std::cout << "Pend : ";
     for (size_t i = 0; i < _pend.size(); ++i)
     {
-        std::cout << _listNbr[i] << " ";
+        std::cout << _pend[i] << " ";
     }
     std::cout << std::endl;
+
+	std::cout << "Odd : ";
+    for (size_t i = 0; i < _odd.size(); ++i)
+    {
+        std::cout << _odd[i] << " ";
+    }
+    std::cout << std::endl;
+
 
 }
 
