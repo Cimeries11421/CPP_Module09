@@ -49,25 +49,42 @@ void PmergeMe<T>::sortNbr(size_t lvl)
     {
         if (_listNbr[y] < _listNbr[x])
         {
-            for (size_t count = 0; count < lvl; ++count)
-            {
-                std::swap(_listNbr[x - count], _listNbr[y - count]);
-            }
+			this->swapPairs(lvl, x , y);
         }
         x += lvl * 2;
         y += lvl * 2;
     }
-	std::cout << "PARTIE 1 -> level : " << lvl << std::endl;
-    this->printList();
+	std::cout << GREEN << "PARTIE 1 -> level : " << lvl << RESET << std::endl;
+    this->printList(); //enlever
 	if (_listNbr.size() / (lvl * 2) >= 2) // taille /  next lvl > 2, alors capacite d'un autre.
 		this->sortNbr(lvl * 2);	
-	std::cout << "PARTIE 2 -> level : " << lvl << std::endl;
+	std::cout << BLUE << "PARTIE 2 -> level : " << lvl << RESET << std::endl;
 
-	// fill main, pend
-	// manque le odd
+	this->fillMainPendOdd(lvl);
+	this->printMainPend(); // enlever
+	this->insertIntoMain(lvl);
+	
+/*	 typename T::iterator	it_end = _listNbr.end();
 
-	x = lvl - 1;
-	y = lvl * 2 - 1;
+	 while (it != it_end)*/
+}
+
+template<typename T>
+void	PmergeMe<T>::swapPairs(size_t lvl, size_t x, size_t y)
+{
+	for (size_t count = 0; count < lvl; ++count)
+    {
+        std::swap(_listNbr[x - count], _listNbr[y - count]);
+    }
+}
+
+template<typename T>
+void	PmergeMe<T>::fillMainPendOdd(size_t lvl)
+{
+	size_t	x = lvl - 1;
+	size_t	y = lvl * 2 - 1;
+	size_t	i;
+
 	_main.clear();
 	_pend.clear();
 	_odd.clear();
@@ -79,34 +96,83 @@ void PmergeMe<T>::sortNbr(size_t lvl)
 		if (x > lvl - 1)
 			_pend.push_back(_listNbr[x]);
 		x += lvl * 2;
-
 	}
-	size_t i = x;
+	i = x;
 	while (i < _listNbr.size())
 	{
 		_odd.push_back(_listNbr[i]);
 		i += lvl;
 	}
-	this->printMainPend(); // a enlever	
-						   
-	//binary insertion
-	
-	/* typename T::iterator	it = _listNbr.begin();
-	 typename T::iterator	it_end = _listNbr.end();
+}
 
-	 while (it != it_end)*/
+//cherche ou mettre la valeur de pend dans le main et l'insere, puis pareil avec la vraie liste
+//mais avec la paire associee.
+template<typename T>
+void	PmergeMe<T>::insertIntoMain(size_t lvl)
+{
+	typename T::iterator	posMain;
+	size_t					i = 0;
 
+	(void)lvl;
+	while (i < _pend.size())
+	{
+		posMain = upper_bound(_main.begin(), _main.end(), _pend[i]);
+		std::cout << ORANGE << "posMain = " << *posMain << RESET << std::endl;
+		this->insertElementsIntoList(lvl, *posMain, _pend[i]);
+		_main.insert(posMain, _pend[i]); 
+	//	posList_x = find(_listNbr.begin(), _listNbr.end(), _pend[i]);
+	//	y = distance(_listNbr.begin(), _listNbr.end(), *posMain) 
+	//	x = distance(_listNbr.begin(), _listNbr.end(), *posMain) 
+		++i;
+	}
+	std::cout << CYAN << "AFTER INSERTION" << RESET << std::endl;
+	this->printMainPend();
+//	this->printList();
+}
+
+//Cherche la paire du pend dans la liste a partie de la valeur, trouve ensuite sa future position 
+//par la position du nombre superieur a la valeur, et echange les places des paires.
+template<typename T>
+void	PmergeMe<T>::insertElementsIntoList(size_t lvl, int biggerValue, int value)
+{
+	typename T::iterator	posValue;
+	typename T::iterator	newPosValue;
+
+	(void)lvl;
+	posValue = find(_listNbr.begin(), _listNbr.end(), value);
+	newPosValue = find (_listNbr.begin(), _listNbr.end(), biggerValue);
+/*	x = distance(_listNbr.begin(), posValue);
+	y = distance(_listNbr.begin(), newPosValue);
+	std::cout << "x = " << x << " list[x] = " << value << std::endl;
+	std::cout << "y = " << y << " list[y] = " << biggerValue << std::endl;*/
+
+	std::cout << "pos value = " << *posValue << std::endl;
+	std::cout << "new pos value = " << *newPosValue << std::endl;
+	this->printList();
+	for (size_t i = 1; i < lvl; ++i)
+	{
+		_listNbr.insert(newPosValue, *posValue);
+		posValue++;
+		_listNbr.erase(posValue);
+		newPosValue++;
+	}
+//	_listNbr.insert(newPosValue - 1, value);
+//	_listNbr.erase(posValue);
+
+	//this->swapPairs(lvl, x, y);
+
+	this->printList();
 }
 
 template<typename T>
 void PmergeMe<T>::printList(void)
 {
-	std::cout << "ListNbr : ";
+	std::cout << PINK << "ListNbr : ";
     for (size_t i = 0; i < _listNbr.size(); ++i)
     {
         std::cout << _listNbr[i] << " ";
     }
-    std::cout << std::endl;
+    std::cout << RESET << std::endl;
 }
 
 template<typename T>
@@ -132,8 +198,6 @@ void PmergeMe<T>::printMainPend(void)
         std::cout << _odd[i] << " ";
     }
     std::cout << std::endl;
-
-
 }
 
 
