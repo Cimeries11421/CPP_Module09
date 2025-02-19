@@ -111,57 +111,77 @@ template<typename T>
 void	PmergeMe<T>::insertIntoMain(size_t lvl)
 {
 	typename T::iterator	posMain;
+	size_t					indexA;
 	size_t					i = 0;
 
 	(void)lvl;
 	while (i < _pend.size())
 	{
 		posMain = upper_bound(_main.begin(), _main.end(), _pend[i]);
-		std::cout << ORANGE << "posMain = " << *posMain << RESET << std::endl;
-		this->insertElementsIntoList(lvl, *posMain, _pend[i]);
+		indexA = distance(_main.begin(), posMain);
+		std::cout << "---------------------------------\n" << std::endl;
+		std::cout << ORANGE << "valeur A dans main = " << *posMain << RESET << std::endl;
+		std::cout << ORANGE << "position A dans main = " << indexA << RESET << std::endl;
+		std::cout << ORANGE << "position A dans liste = " << (indexA * (lvl * 2 - 1)) << RESET << std::endl;
+		std::cout << ORANGE << "valeur A dans liste = " << _listNbr[(indexA * (lvl * 2 - 1))] << RESET << std::endl;
+		this->printMainPend();
+		this->printList();
+		this->insertElementsIntoList(lvl, (indexA * (lvl * 2 - 1)), _pend[i]);
+		std::cout << "---------------------------------\n" << std::endl;
 		_main.insert(posMain, _pend[i]); 
-	//	posList_x = find(_listNbr.begin(), _listNbr.end(), _pend[i]);
-	//	y = distance(_listNbr.begin(), _listNbr.end(), *posMain) 
-	//	x = distance(_listNbr.begin(), _listNbr.end(), *posMain) 
 		++i;
 	}
-	std::cout << CYAN << "AFTER INSERTION" << RESET << std::endl;
+	i = 0;
 	this->printMainPend();
-//	this->printList();
+	this->printList();
+	while (i < _odd.size())
+	{
+		posMain = upper_bound(_main.begin(), _main.end(), _odd[i]);
+		indexA = distance(_main.begin(), posMain);
+		std::cout  << "---------------------------------\n" << std::endl;
+		std::cout << RED << "valeur A dans main = " << *posMain << RESET << std::endl;
+		std::cout << RED << "position A dans main = " << indexA << RESET << std::endl;
+		std::cout << RED << "position A dans liste = " << (indexA * (lvl * 2 - 1)) << RESET << std::endl;
+		std::cout << RED << "valeur A dans liste = " << _listNbr[(indexA * (lvl * 2 - 1))] << RESET << std::endl;
+		this->printMainPend();
+		this->printList();
+		this->insertElementsIntoList(lvl, (indexA * (lvl * 2 - 1)), _odd[i]);
+		_main.insert(posMain, _odd[i]); 
+		++i;
+	}
+	this->printMainPend();
+	this->printList();
 }
 
 //Cherche la paire du pend dans la liste a partie de la valeur, trouve ensuite sa future position 
 //par la position du nombre superieur a la valeur, et echange les places des paires.
 template<typename T>
-void	PmergeMe<T>::insertElementsIntoList(size_t lvl, int biggerValue, int value)
+void	PmergeMe<T>::insertElementsIntoList(size_t lvl, int posA, int valueB)
 {
-	typename T::iterator	posValue;
-	typename T::iterator	newPosValue;
+	typename T::iterator	posValueB;
+	size_t					begPairA;
 
-	(void)lvl;
-	posValue = find(_listNbr.begin(), _listNbr.end(), value);
-	newPosValue = find (_listNbr.begin(), _listNbr.end(), biggerValue);
-/*	x = distance(_listNbr.begin(), posValue);
-	y = distance(_listNbr.begin(), newPosValue);
-	std::cout << "x = " << x << " list[x] = " << value << std::endl;
-	std::cout << "y = " << y << " list[y] = " << biggerValue << std::endl;*/
+	posValueB = find(_listNbr.begin(), _listNbr.end(), valueB);
+	begPairA = posA - (lvl - 1);
+	std::cout << "index debut pair de A = " << begPairA << std::endl;
+	std::cout << "valeur debut pair de A = " << _listNbr[begPairA] << std::endl;
+	std::cout << "valeur B = " << *posValueB << std::endl;
 
-	std::cout << "pos value = " << *posValue << std::endl;
-	std::cout << "new pos value = " << *newPosValue << std::endl;
-	this->printList();
-	for (size_t i = 1; i < lvl; ++i)
+	for (size_t i = 0; i < lvl; ++i)
 	{
-		_listNbr.insert(newPosValue, *posValue);
-		posValue++;
-		_listNbr.erase(posValue);
-		newPosValue++;
+		_listNbr.insert(_listNbr.begin() + begPairA, *posValueB);
 	}
-//	_listNbr.insert(newPosValue - 1, value);
-//	_listNbr.erase(posValue);
-
-	//this->swapPairs(lvl, x, y);
-
+	posValueB += lvl;
+	for (size_t i = 0; i < lvl; ++i)
+	{
+		_listNbr.erase(posValueB);
+		--posValueB;
+	}
+	std::cout << CYAN << "AFTER INSERTION" << RESET << std::endl;
+	//this->printMainPend();
 	this->printList();
+	std::cout << "---------------------------------\n" << std::endl;
+
 }
 
 template<typename T>
