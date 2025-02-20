@@ -168,42 +168,39 @@ void	PmergeMe<T>::insertIntoMain(size_t lvl)
 template<typename T>
 void	PmergeMe<T>::insertElementsIntoList(size_t lvl, int valueA, int valueB)
 {
-	typename T::iterator	posValueB;
-	typename T::iterator	posValueA;
-	size_t					indexB;
+	size_t	posA;
+	size_t	posB;
+	T		groupB(lvl);
 
-	posValueB = find(_listNbr.begin(), _listNbr.end(), valueB);
-	std::cout << MAGENTA << "VALUE A = " << valueA << RESET << std::endl; 
-	posValueA = find(_listNbr.begin(), _listNbr.end(), valueA);
-	std::cout << ORANGE << "valeur A dans liste = " << *posValueA << std::endl;
-	posValueA -= lvl - 1;
-	std::cout << "valeur debut pair de A dans liste = " << *posValueA << std::endl;
-	std::cout << "valeur B = " << *posValueB << std::endl;
+	std::cout << GREEN << "valueA = " << valueA << RESET <<std::endl;
+	std::cout << CYAN << "valueB = " << valueB << RESET <<std::endl;
 
-	indexB = distance(_listNbr.begin(), posValueB);
-	std::cout << GREEN << "index B = " << indexB << std::endl;
-	std::cout << GREEN << "Value index B = " << _listNbr[indexB]<<  std::endl;
+	this->printList();
+	for (size_t i = 0; i < _listNbr.size(); ++i)
+	{
+//		if (_listNbr[i] == valueA && (i + 1) % lvl == 0)
+//			posA = i;
+		if (_listNbr[i] == valueB && (i + 1) % lvl == 0)
+			posB = i;
+	}
+	std::cout << CYAN << "posB = " << posB << RESET <<std::endl;
+	size_t	groupB_start = posB - (lvl - 1);
+	std::cout << CYAN << "groupB_start = " << groupB_start << RESET <<std::endl;
 	for (size_t i = 0; i < lvl; ++i)
 	{
-		this->printList();
-		_listNbr.insert(posValueA, *posValueB);
+		groupB[i] = _listNbr[groupB_start + i];
 	}
-	std::cout << CYAN << "AFTER INSERTION" << RESET << std::endl;
-	this->printList();
+	_listNbr.erase(_listNbr.begin() + groupB_start, _listNbr.begin() + groupB_start + lvl); //lvl 1 ? 
 
-//	posValueB = find (_listNbr.begin() + indexB, _listNbr.end(), valueB); // pas sur du truc la ?? 
-	posValueB = _listNbr.begin() + indexB + 1; // + 1 fout la merde non ?? 
-	//std::cout << LIGHT_CYAN << "valeur de B après ajout de lvl = " << *posValueB << RESET <<std::endl;
-	for (size_t i = 0; i < lvl; ++i)
+	for (size_t i = 0; i < _listNbr.size(); ++i)
 	{
-		std::cout << LIGHT_CYAN << "valeur de B après ajout de lvl = " << *posValueB << RESET <<std::endl;
-		posValueB = _listNbr.erase(posValueB);
+		if (_listNbr[i] == valueA && (i + 1) % lvl == 0)
+			posA = i;
 	}
-	std::cout << CYAN << "AFTER INSERTION AND ERASE" << RESET << std::endl;
-	this->printMainPend();
+	size_t	groupA_start = posA - (lvl - 1);
+	
+	_listNbr.insert(_listNbr.begin() + groupA_start, groupB.begin(), groupB.end());
 	this->printList();
-	std::cout << "---------------------------------\n" << std::endl;
-
 }
 
 template<typename T>
