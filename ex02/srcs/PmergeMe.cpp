@@ -118,15 +118,20 @@ void	PmergeMe<T>::insertIntoMain(size_t lvl)
 	while (i < _pend.size())
 	{
 		posMain = upper_bound(_main.begin(), _main.end(), _pend[i]);
+		if (posMain == _main.end())
+		{
+			std::cout << "PAS DE PLUS GRAND" << std::endl;
+			++i; // pose probleme ?  12 25 36 66 102
+			continue ;
+		}
 		indexA = distance(_main.begin(), posMain);
 		std::cout << "---------------------------------\n" << std::endl;
 		std::cout << ORANGE << "valeur A dans main = " << *posMain << RESET << std::endl;
 		std::cout << ORANGE << "position A dans main = " << indexA << RESET << std::endl;
-		std::cout << ORANGE << "position A dans liste = " << (indexA * (lvl * 2 - 1)) << RESET << std::endl;
-		std::cout << ORANGE << "valeur A dans liste = " << _listNbr[(indexA * (lvl * 2 - 1))] << RESET << std::endl;
 		this->printMainPend();
+		std::cout << RED << "valeur a inserer = " << _pend[i] << RESET <<std::endl;
 		this->printList();
-		this->insertElementsIntoList(lvl, (indexA * (lvl * 2 - 1)), _pend[i]);
+		this->insertElementsIntoList(lvl, *posMain, _pend[i]);
 		std::cout << "---------------------------------\n" << std::endl;
 		_main.insert(posMain, _pend[i]); 
 		++i;
@@ -137,15 +142,20 @@ void	PmergeMe<T>::insertIntoMain(size_t lvl)
 	while (i < _odd.size())
 	{
 		posMain = upper_bound(_main.begin(), _main.end(), _odd[i]);
+		if (posMain == _main.end())
+		{
+			std::cout << "PAS DE PLUS GRAND" << std::endl;
+			++i; // pose probleme ?  12 25 36 66 102
+			continue ;
+		}
 		indexA = distance(_main.begin(), posMain);
 		std::cout  << "---------------------------------\n" << std::endl;
 		std::cout << RED << "valeur A dans main = " << *posMain << RESET << std::endl;
 		std::cout << RED << "position A dans main = " << indexA << RESET << std::endl;
-		std::cout << RED << "position A dans liste = " << (indexA * (lvl * 2 - 1)) << RESET << std::endl;
-		std::cout << RED << "valeur A dans liste = " << _listNbr[(indexA * (lvl * 2 - 1))] << RESET << std::endl;
 		this->printMainPend();
+		std::cout << RED << "valeur a inserer = " << _odd[i] << RESET <<std::endl;
 		this->printList();
-		this->insertElementsIntoList(lvl, (indexA * (lvl * 2 - 1)), _odd[i]);
+		this->insertElementsIntoList(lvl, *posMain, _odd[i]);
 		_main.insert(posMain, _odd[i]); 
 		++i;
 	}
@@ -156,29 +166,39 @@ void	PmergeMe<T>::insertIntoMain(size_t lvl)
 //Cherche la paire du pend dans la liste a partie de la valeur, trouve ensuite sa future position 
 //par la position du nombre superieur a la valeur, et echange les places des paires.
 template<typename T>
-void	PmergeMe<T>::insertElementsIntoList(size_t lvl, int posA, int valueB)
+void	PmergeMe<T>::insertElementsIntoList(size_t lvl, int valueA, int valueB)
 {
 	typename T::iterator	posValueB;
-	size_t					begPairA;
+	typename T::iterator	posValueA;
+	size_t					indexB;
 
 	posValueB = find(_listNbr.begin(), _listNbr.end(), valueB);
-	begPairA = posA - (lvl - 1);
-	std::cout << "index debut pair de A = " << begPairA << std::endl;
-	std::cout << "valeur debut pair de A = " << _listNbr[begPairA] << std::endl;
+	std::cout << MAGENTA << "VALUE A = " << valueA << RESET << std::endl; 
+	posValueA = find(_listNbr.begin(), _listNbr.end(), valueA);
+	std::cout << ORANGE << "valeur A dans liste = " << *posValueA << std::endl;
+	posValueA -= lvl - 1;
+	std::cout << "valeur debut pair de A dans liste = " << *posValueA << std::endl;
 	std::cout << "valeur B = " << *posValueB << std::endl;
 
+	indexB = distance(_listNbr.begin(), posValueB);
+	std::cout << GREEN << "index B = " << indexB << std::endl;
+	std::cout << GREEN << "Value index B = " << _listNbr[indexB]<<  std::endl;
 	for (size_t i = 0; i < lvl; ++i)
 	{
-		_listNbr.insert(_listNbr.begin() + begPairA, *posValueB);
-	}
-	posValueB += lvl;
-	for (size_t i = 0; i < lvl; ++i)
-	{
-		_listNbr.erase(posValueB);
-		--posValueB;
+		this->printList();
+		_listNbr.insert(posValueA, *posValueB);
 	}
 	std::cout << CYAN << "AFTER INSERTION" << RESET << std::endl;
-	//this->printMainPend();
+	this->printList();
+	posValueB = _listNbr.begin() + indexB + 1; // + 1 fout la merde non ?? 
+	//std::cout << LIGHT_CYAN << "valeur de B après ajout de lvl = " << *posValueB << RESET <<std::endl;
+	for (size_t i = 0; i < lvl; ++i)
+	{
+		std::cout << LIGHT_CYAN << "valeur de B après ajout de lvl = " << *posValueB << RESET <<std::endl;
+		posValueB = _listNbr.erase(posValueB);
+	}
+	std::cout << CYAN << "AFTER INSERTION AND ERASE" << RESET << std::endl;
+	this->printMainPend();
 	this->printList();
 	std::cout << "---------------------------------\n" << std::endl;
 
