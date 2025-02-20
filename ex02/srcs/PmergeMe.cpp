@@ -190,6 +190,8 @@ void	PmergeMe<T>::insertElementsIntoList(size_t lvl, int valueA, int valueB)
 	}
 	std::cout << CYAN << "AFTER INSERTION" << RESET << std::endl;
 	this->printList();
+
+//	posValueB = find (_listNbr.begin() + indexB, _listNbr.end(), valueB); // pas sur du truc la ?? 
 	posValueB = _listNbr.begin() + indexB + 1; // + 1 fout la merde non ?? 
 	//std::cout << LIGHT_CYAN << "valeur de B après ajout de lvl = " << *posValueB << RESET <<std::endl;
 	for (size_t i = 0; i < lvl; ++i)
