@@ -111,7 +111,6 @@ template<typename T>
 void	PmergeMe<T>::insertIntoMain(size_t lvl)
 {
 	typename T::iterator	posMain;
-	size_t					indexA;
 	size_t					i = 0;
 
 	(void)lvl;
@@ -124,15 +123,7 @@ void	PmergeMe<T>::insertIntoMain(size_t lvl)
 			++i; // pose probleme ?  12 25 36 66 102
 			continue ;
 		}
-		indexA = distance(_main.begin(), posMain);
-		std::cout << "---------------------------------\n" << std::endl;
-		std::cout << ORANGE << "valeur A dans main = " << *posMain << RESET << std::endl;
-		std::cout << ORANGE << "position A dans main = " << indexA << RESET << std::endl;
-		this->printMainPend();
-		std::cout << RED << "valeur a inserer = " << _pend[i] << RESET <<std::endl;
-		this->printList();
 		this->insertElementsIntoList(lvl, *posMain, _pend[i]);
-		std::cout << "---------------------------------\n" << std::endl;
 		_main.insert(posMain, _pend[i]); 
 		++i;
 	}
@@ -148,13 +139,6 @@ void	PmergeMe<T>::insertIntoMain(size_t lvl)
 			++i; // pose probleme ?  12 25 36 66 102
 			continue ;
 		}
-		indexA = distance(_main.begin(), posMain);
-		std::cout  << "---------------------------------\n" << std::endl;
-		std::cout << RED << "valeur A dans main = " << *posMain << RESET << std::endl;
-		std::cout << RED << "position A dans main = " << indexA << RESET << std::endl;
-		this->printMainPend();
-		std::cout << RED << "valeur a inserer = " << _odd[i] << RESET <<std::endl;
-		this->printList();
 		this->insertElementsIntoList(lvl, *posMain, _odd[i]);
 		_main.insert(posMain, _odd[i]); 
 		++i;
