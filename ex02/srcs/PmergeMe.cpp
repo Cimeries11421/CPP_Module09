@@ -213,6 +213,7 @@ void	PmergeMe<T>::insertElementsIntoList(size_t lvl, int valueA, int valueB)
 		}
 	}
 	std::cout << "pos A = "<< posA << std::endl;
+	std::cout << "pos A = "<< posA << std::endl;
 	size_t	groupA_start = posA - (lvl - 1);
 	
 	_listNbr.insert(_listNbr.begin() + groupA_start, groupB.begin(), groupB.end());
