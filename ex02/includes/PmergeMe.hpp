@@ -42,6 +42,7 @@ class	PmergeMe
 		void	fillMainPendOdd(size_t lvl);
 		void	insertIntoMain(size_t lvl);
 		void	insertElementsIntoList(size_t lvl, int biggerValue, int value);
+
 		void	printList(void);
 		void	printMainPend(void);
 };

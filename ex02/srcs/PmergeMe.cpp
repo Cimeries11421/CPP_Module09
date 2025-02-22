@@ -105,6 +105,35 @@ void	PmergeMe<T>::fillMainPendOdd(size_t lvl)
 	}
 }
 
+/*template<typename T>
+typename T::iterator PmergeMe<T>custom_upper_bound(typename T::iterator first, typename T::iterator last, const T& value)
+{
+    while (first != last)
+	{
+        if (value < *first)
+		{
+            return first;
+        }
+        ++first;
+    }
+    return last;
+}*/
+
+/*template<typename T>
+typename T::iterator PmergeMe<T>::custom_upper_bound(typename T::iterator first, typename T::iterator last,
+		const typename T::value_type& value)
+{
+	 while (first != last) {
+        if (value < *first) {
+            return first;
+        }
+        ++first;
+    }
+    return last;
+   }
+*/
+
+
 //cherche ou mettre la valeur de pend dans le main et l'insere, puis pareil avec la vraie liste
 //mais avec la paire associee.
 template<typename T>
@@ -159,12 +188,11 @@ void	PmergeMe<T>::insertElementsIntoList(size_t lvl, int valueA, int valueB)
 	std::cout << GREEN << "valueA = " << valueA << RESET <<std::endl;
 	std::cout << CYAN << "valueB = " << valueB << RESET <<std::endl;
 
-	this->printList();
 	for (size_t i = 0; i < _listNbr.size(); ++i)
 	{
 //		if (_listNbr[i] == valueA && (i + 1) % lvl == 0)
 //			posA = i;
-		if (_listNbr[i] == valueB && (i + 1) % lvl == 0)
+		if (_listNbr[i] == valueB )//&& (i + 1) % lvl == 0)
 			posB = i;
 	}
 	std::cout << CYAN << "posB = " << posB << RESET <<std::endl;
@@ -178,13 +206,16 @@ void	PmergeMe<T>::insertElementsIntoList(size_t lvl, int valueA, int valueB)
 
 	for (size_t i = 0; i < _listNbr.size(); ++i)
 	{
-		if (_listNbr[i] == valueA && (i + 1) % lvl == 0)
+		if (_listNbr[i] == valueA)// && (i + 1) % lvl == 0)
+		{
 			posA = i;
+			break; // si doublon prend le premier et break, pour éviter d'avoir celui d'apres
+		}
 	}
+	std::cout << "pos A = "<< posA << std::endl;
 	size_t	groupA_start = posA - (lvl - 1);
 	
 	_listNbr.insert(_listNbr.begin() + groupA_start, groupB.begin(), groupB.end());
-	this->printList();
 }
 
 template<typename T>
