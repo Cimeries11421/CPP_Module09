@@ -14,19 +14,10 @@ PmergeMe<T>::PmergeMe(const PmergeMe<T> &other)
 template<typename T>
 PmergeMe<T>::PmergeMe(int ac, char **av)
 {
-	/*std::istringstream	flow(str);
-	int					nbr;
-
-    while (flow >> nbr)
-    {
-        _listNbr.push_back(nbr);
-    }*/
-
 	for (int i = 1; i < ac; ++i)
 	{
 		_listNbr.push_back(atoi(av[i]));
 	}
-
 }
 
 template<typename T>
@@ -60,19 +51,11 @@ void PmergeMe<T>::sortNbr(size_t lvl)
         x += lvl * 2;
         y += lvl * 2;
     }
-	std::cout << GREEN << "PARTIE 1 -> level : " << lvl << RESET << std::endl;
-    this->printList(); //enlever
 	if (_listNbr.size() / (lvl * 2) >= 2) // taille /  next lvl > 2, alors capacite d'un autre.
 		this->sortNbr(lvl * 2);	
-	std::cout << BLUE << "PARTIE 2 -> level : " << lvl << RESET << std::endl;
 
 	this->fillMainPendOdd(lvl);
-	this->printMainPend(); // enlever
 	this->insertIntoMain(lvl);
-	
-/*	 typename T::iterator	it_end = _listNbr.end();
-
-	 while (it != it_end)*/
 }
 
 template<typename T>
@@ -111,35 +94,6 @@ void	PmergeMe<T>::fillMainPendOdd(size_t lvl)
 	}
 }
 
-/*template<typename T>
-typename T::iterator PmergeMe<T>custom_upper_bound(typename T::iterator first, typename T::iterator last, const T& value)
-{
-    while (first != last)
-	{
-        if (value < *first)
-		{
-            return first;
-        }
-        ++first;
-    }
-    return last;
-}*/
-
-/*template<typename T>
-typename T::iterator PmergeMe<T>::custom_upper_bound(typename T::iterator first, typename T::iterator last,
-		const typename T::value_type& value)
-{
-	 while (first != last) {
-        if (value < *first) {
-            return first;
-        }
-        ++first;
-    }
-    return last;
-   }
-*/
-
-
 //cherche ou mettre la valeur de pend dans le main et l'insere, puis pareil avec la vraie liste
 //mais avec la paire associee.
 template<typename T>
@@ -151,10 +105,10 @@ void	PmergeMe<T>::insertIntoMain(size_t lvl)
 	(void)lvl;
 	while (i < _pend.size())
 	{
+		this->printMainPend();
 		posMain = upper_bound(_main.begin(), _main.end(), _pend[i]);
 		if (posMain == _main.end())
 		{
-			std::cout << "PAS DE PLUS GRAND" << std::endl;
 			++i; // pose probleme ?  12 25 36 66 102
 			continue ;
 		}
@@ -163,14 +117,11 @@ void	PmergeMe<T>::insertIntoMain(size_t lvl)
 		++i;
 	}
 	i = 0;
-	this->printMainPend();
-	this->printList();
 	while (i < _odd.size())
 	{
 		posMain = upper_bound(_main.begin(), _main.end(), _odd[i]);
 		if (posMain == _main.end())
 		{
-			std::cout << "PAS DE PLUS GRAND" << std::endl;
 			++i; // pose probleme ?  12 25 36 66 102
 			continue ;
 		}
@@ -178,8 +129,6 @@ void	PmergeMe<T>::insertIntoMain(size_t lvl)
 		_main.insert(posMain, _odd[i]); 
 		++i;
 	}
-	this->printMainPend();
-	this->printList();
 }
 
 //Cherche la paire du pend dans la liste a partie de la valeur, trouve ensuite sa future position 
@@ -187,12 +136,9 @@ void	PmergeMe<T>::insertIntoMain(size_t lvl)
 template<typename T>
 void	PmergeMe<T>::insertElementsIntoList(size_t lvl, int valueA, int valueB)
 {
-	size_t	posA;
+	size_t	posA = 0;
 	size_t	posB;
 	T		groupB(lvl);
-
-	std::cout << GREEN << "valueA = " << valueA << RESET <<std::endl;
-	std::cout << CYAN << "valueB = " << valueB << RESET <<std::endl;
 
 	for (size_t i = 0; i < _listNbr.size(); ++i)
 	{
@@ -201,9 +147,7 @@ void	PmergeMe<T>::insertElementsIntoList(size_t lvl, int valueA, int valueB)
 		if (_listNbr[i] == valueB )//&& (i + 1) % lvl == 0)
 			posB = i;
 	}
-	std::cout << CYAN << "posB = " << posB << RESET <<std::endl;
 	size_t	groupB_start = posB - (lvl - 1);
-	std::cout << CYAN << "groupB_start = " << groupB_start << RESET <<std::endl;
 	for (size_t i = 0; i < lvl; ++i)
 	{
 		groupB[i] = _listNbr[groupB_start + i];
@@ -218,8 +162,6 @@ void	PmergeMe<T>::insertElementsIntoList(size_t lvl, int valueA, int valueB)
 			break; // si doublon prend le premier et break, pour éviter d'avoir celui d'apres
 		}
 	}
-	std::cout << "pos A = "<< posA << std::endl;
-	std::cout << "pos A = "<< posA << std::endl;
 	size_t	groupA_start = posA - (lvl - 1);
 	
 	_listNbr.insert(_listNbr.begin() + groupA_start, groupB.begin(), groupB.end());
@@ -228,12 +170,12 @@ void	PmergeMe<T>::insertElementsIntoList(size_t lvl, int valueA, int valueB)
 template<typename T>
 void PmergeMe<T>::printList(void)
 {
-	std::cout << PINK << "ListNbr : ";
+//	std::cout << PINK << "ListNbr : ";
     for (size_t i = 0; i < _listNbr.size(); ++i)
     {
         std::cout << _listNbr[i] << " ";
     }
-    std::cout << RESET << std::endl;
+	std::cout << std::endl;
 }
 
 template<typename T>
