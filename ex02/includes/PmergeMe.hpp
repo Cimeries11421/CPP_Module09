@@ -35,7 +35,7 @@ class	PmergeMe
 		PmergeMe	&operator=(const PmergeMe &other);
 
 	public :
-		PmergeMe(char *str);
+		PmergeMe(int ac, char **av);
 		~PmergeMe();
 		void	sortNbr(size_t lvl);
 		void	swapPairs(size_t lvl, size_t x, size_t y);

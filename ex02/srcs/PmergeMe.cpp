@@ -12,15 +12,21 @@ PmergeMe<T>::PmergeMe(const PmergeMe<T> &other)
 }
 
 template<typename T>
-PmergeMe<T>::PmergeMe(char *str)
+PmergeMe<T>::PmergeMe(int ac, char **av)
 {
-	std::istringstream	flow(str);
+	/*std::istringstream	flow(str);
 	int					nbr;
 
     while (flow >> nbr)
     {
         _listNbr.push_back(nbr);
-    }
+    }*/
+
+	for (int i = 1; i < ac; ++i)
+	{
+		_listNbr.push_back(atoi(av[i]));
+	}
+
 }
 
 template<typename T>
