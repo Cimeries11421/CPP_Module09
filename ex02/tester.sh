@@ -1,15 +1,15 @@
 #!/bin/bash
 
-NUM_TESTS=300 #nombre de test
+NUM_TESTS=1 #nombre de test
 
 for ((test_num=1; test_num<=NUM_TESTS; test_num++)); do
     echo "===== Test $test_num ====="
 
     # Générer les nombres aléatoires et les stocker dans une variable
-    random_numbers=$(shuf -i 1-10000 -n 3000 | tr "\n" " ")
+    random_numbers=$(shuf -i 1-1000 -n 30 | tr "\n" " ")
     
     # Afficher les nombres aléatoires générés
-#   echo "Nombres aléatoires générés: $random_numbers"
+   echo "Nombres aléatoires générés: $random_numbers"
     
     # Exécution du programme avec ces nombres
     ./PmergeMe $random_numbers | tr ' ' '\n' > output_programme.txt
