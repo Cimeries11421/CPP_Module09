@@ -40,6 +40,8 @@ class	PmergeMe
 		void	sortNbr(size_t lvl);
 		void	swapPairs(size_t lvl, size_t x, size_t y);
 		void	fillMainPendOdd(size_t lvl);
+		void	jacobsthal(void);
+		void	swapElement(size_t index1, size_t index2);
 		void	insertIntoMain(size_t lvl);
 		void	insertElementsIntoList(size_t lvl, int biggerValue, int value);
 

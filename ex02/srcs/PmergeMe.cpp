@@ -97,24 +97,55 @@ void	PmergeMe<T>::fillMainPendOdd(size_t lvl)
 //cherche ou mettre la valeur de pend dans le main et l'insere, puis pareil avec la vraie liste
 //mais avec la paire associee.
 template<typename T>
+void	PmergeMe<T>::swapElement(size_t index1, size_t index2)
+{
+	size_t	x = index1;
+	size_t	y = index2;
+
+	while (x < y)
+	{
+		std::swap(_pend[x - 1], _pend[y - 2]);
+		x++;
+		y--;
+	}
+}
+
+template<typename T>
+void	PmergeMe<T>::jacobsthal(void)
+{
+	size_t	index1 = 1;
+	size_t	index2 = 1;
+	size_t	index3;
+
+	for (size_t i = 0; i < _pend.size(); ++i)
+	{
+		index3 = index1 * 2 + index2;
+		if ((i + 2) == index3)
+		{
+			index1 = index2;
+			index2 = index3;
+			this->swapElement(index1, index2);
+		}
+	}
+}
+
+template<typename T>
 void	PmergeMe<T>::insertIntoMain(size_t lvl)
 {
 	typename T::iterator	posMain;
 	size_t					i = 0;
+	size_t					count = 0;
 
 	(void)lvl;
+	this->jacobsthal();
+	
 	while (i < _pend.size())
 	{
-		this->printMainPend();
-		posMain = upper_bound(_main.begin(), _main.end(), _pend[i]);
-		if (posMain == _main.end())
-		{
-			++i; // pose probleme ?  12 25 36 66 102
-			continue ;
-		}
+		posMain = upper_bound(_main.begin(), _main.begin() + i + 2 + count, _pend[i]); //i + 2 > posA of B
 		this->insertElementsIntoList(lvl, *posMain, _pend[i]);
 		_main.insert(posMain, _pend[i]); 
 		++i;
+		++count;
 	}
 	i = 0;
 	while (i < _odd.size())
@@ -142,8 +173,6 @@ void	PmergeMe<T>::insertElementsIntoList(size_t lvl, int valueA, int valueB)
 
 	for (size_t i = 0; i < _listNbr.size(); ++i)
 	{
-//		if (_listNbr[i] == valueA && (i + 1) % lvl == 0)
-//			posA = i;
 		if (_listNbr[i] == valueB )//&& (i + 1) % lvl == 0)
 			posB = i;
 	}
@@ -181,26 +210,26 @@ void PmergeMe<T>::printList(void)
 template<typename T>
 void PmergeMe<T>::printMainPend(void)
 {
-	std::cout << "Main : ";
+/*	std::cout << "Main : ";
     for (size_t i = 0; i < _main.size(); ++i)
     {
         std::cout << _main[i] << " ";
     }
     std::cout << std::endl;
-
+*/
 	std::cout << "Pend : ";
     for (size_t i = 0; i < _pend.size(); ++i)
     {
         std::cout << _pend[i] << " ";
     }
     std::cout << std::endl;
-
+/*
 	std::cout << "Odd : ";
     for (size_t i = 0; i < _odd.size(); ++i)
     {
         std::cout << _odd[i] << " ";
     }
-    std::cout << std::endl;
+    std::cout << std::endl;*/
 }
 
 
