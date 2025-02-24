@@ -137,16 +137,28 @@ void	PmergeMe<T>::insertIntoMain(size_t lvl)
 	size_t					count = 0;
 
 	(void)lvl;
+	std::cout << CYAN << "LVL = " << lvl << RESET << std::endl;
+	std::cout << BLUE << "BEFORE JACOB" << RESET << std::endl;
+	this->printMainPend();
+	this->printList();
 	this->jacobsthal();
-	
+	std::cout << BLUE << "AFTER JACOB" << RESET << std::endl;
+	//this->printMainPend();
+	this->printList();
 	while (i < _pend.size())
 	{
-		posMain = upper_bound(_main.begin(), _main.begin() + i + 2 + count, _pend[i]); //i + 2 > posA of B
+ //_main.begin() + i + 2 + count
+		this->printList();
+		this->printMainPend();
+		posMain = upper_bound(_main.begin(), _main.end(), _pend[i]); //i + 2 > posA of B
 		this->insertElementsIntoList(lvl, *posMain, _pend[i]);
 		_main.insert(posMain, _pend[i]); 
 		++i;
 		++count;
 	}
+		this->printList();
+		this->printMainPend();
+
 	i = 0;
 	while (i < _odd.size())
 	{
@@ -171,12 +183,16 @@ void	PmergeMe<T>::insertElementsIntoList(size_t lvl, int valueA, int valueB)
 	size_t	posB;
 	T		groupB(lvl);
 
+	std::cout << MAGENTA << "valueA = " << valueA << RESET << std::endl;
+	std::cout << ORANGE << "valueB = " << valueB << RESET << std::endl;
 	for (size_t i = 0; i < _listNbr.size(); ++i)
 	{
 		if (_listNbr[i] == valueB )//&& (i + 1) % lvl == 0)
 			posB = i;
 	}
 	size_t	groupB_start = posB - (lvl - 1);
+	std::cout << ORANGE << "posB = " << posB << RESET << std::endl;
+	std::cout << ORANGE << "groupB_start = " << groupB_start << RESET << std::endl;
 	for (size_t i = 0; i < lvl; ++i)
 	{
 		groupB[i] = _listNbr[groupB_start + i];
@@ -199,37 +215,37 @@ void	PmergeMe<T>::insertElementsIntoList(size_t lvl, int valueA, int valueB)
 template<typename T>
 void PmergeMe<T>::printList(void)
 {
-//	std::cout << PINK << "ListNbr : ";
+	std::cout << PINK << "ListNbr : ";
     for (size_t i = 0; i < _listNbr.size(); ++i)
     {
         std::cout << _listNbr[i] << " ";
     }
-	std::cout << std::endl;
+	std::cout << RESET <<std::endl;
 }
 
 template<typename T>
 void PmergeMe<T>::printMainPend(void)
 {
-/*	std::cout << "Main : ";
+	std::cout << "Main : ";
     for (size_t i = 0; i < _main.size(); ++i)
     {
         std::cout << _main[i] << " ";
     }
     std::cout << std::endl;
-*/
+
 	std::cout << "Pend : ";
     for (size_t i = 0; i < _pend.size(); ++i)
     {
         std::cout << _pend[i] << " ";
     }
     std::cout << std::endl;
-/*
+
 	std::cout << "Odd : ";
     for (size_t i = 0; i < _odd.size(); ++i)
     {
         std::cout << _odd[i] << " ";
     }
-    std::cout << std::endl;*/
+    std::cout << std::endl;
 }
 
 

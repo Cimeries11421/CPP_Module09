@@ -20,6 +20,7 @@ int	main(int ac, char **av)
 	}
 	PmergeMe<std::vector<int> >container1(ac, av);	
 	container1.sortNbr(1);
+	std::cout << "***FIN***" << std::endl;
 	container1.printList();
 	return (0);
 }
