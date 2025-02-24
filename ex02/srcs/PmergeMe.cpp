@@ -53,7 +53,6 @@ void PmergeMe<T, Tpair>::sortNbr(size_t lvl)
     }
 	if (_listNbr.size() / (lvl * 2) >= 2) // taille /  next lvl > 2, alors capacite d'un autre.
 		this->sortNbr(lvl * 2);	
-
 	this->fillMainPendOdd(lvl);
 	this->insertIntoMain(lvl);
 }
@@ -139,28 +138,17 @@ void	PmergeMe<T, Tpair>::insertIntoMain(size_t lvl)
 	size_t					count = 0;
 
 	(void)lvl;
-	std::cout << CYAN << "LVL = " << lvl << RESET << std::endl;
-	std::cout << BLUE << "BEFORE JACOB" << RESET << std::endl;
-	this->printMainPend();
-	this->printList();
 	this->jacobsthal();
-	std::cout << BLUE << "AFTER JACOB" << RESET << std::endl;
-	this->printMainPend();
-	this->printList();
 	while (i < _pend.size())
 	{
- //_main.begin() + i + 2 + count
-		this->printList();
-		this->printMainPend();
+		//_main.begin() + _pend[i].second + 2 + count;
+		//_main.begin() + i + 2 + count
 		posMain = upper_bound(_main.begin(), _main.begin() + _pend[i].second + 2 + count, _pend[i].first); //i + 2 > posA of B
 		this->insertElementsIntoList(lvl, *posMain, _pend[i].first);
 		_main.insert(posMain, _pend[i].first); 
 		++i;
 		++count;
 	}
-		this->printList();
-		this->printMainPend();
-
 	i = 0;
 	while (i < _odd.size())
 	{
@@ -168,6 +156,7 @@ void	PmergeMe<T, Tpair>::insertIntoMain(size_t lvl)
 		if (posMain == _main.end())
 		{
 			++i; // pose probleme ?  12 25 36 66 102
+				 //placer à la fin ? 
 			continue ;
 		}
 		this->insertElementsIntoList(lvl, *posMain, _odd[i]);
@@ -185,16 +174,12 @@ void	PmergeMe<T, Tpair>::insertElementsIntoList(size_t lvl, int valueA, int valu
 	size_t	posB;
 	T		groupB(lvl);
 
-	std::cout << MAGENTA << "valueA = " << valueA << RESET << std::endl;
-	std::cout << ORANGE << "valueB = " << valueB << RESET << std::endl;
 	for (size_t i = 0; i < _listNbr.size(); ++i)
 	{
 		if (_listNbr[i] == valueB )//&& (i + 1) % lvl == 0)
 			posB = i;
 	}
 	size_t	groupB_start = posB - (lvl - 1);
-	std::cout << ORANGE << "posB = " << posB << RESET << std::endl;
-	std::cout << ORANGE << "groupB_start = " << groupB_start << RESET << std::endl;
 	for (size_t i = 0; i < lvl; ++i)
 	{
 		groupB[i] = _listNbr[groupB_start + i];
@@ -217,14 +202,14 @@ void	PmergeMe<T, Tpair>::insertElementsIntoList(size_t lvl, int valueA, int valu
 template<typename T, typename Tpair>
 void PmergeMe<T, Tpair>::printList(void)
 {
-	std::cout << PINK << "ListNbr : ";
     for (size_t i = 0; i < _listNbr.size(); ++i)
     {
         std::cout << _listNbr[i] << " ";
     }
-	std::cout << RESET <<std::endl;
+	std::cout << std::endl;
 }
 
+//ENLEVERRR
 template<typename T, typename Tpair>
 void PmergeMe<T, Tpair>::printMainPend(void)
 {
