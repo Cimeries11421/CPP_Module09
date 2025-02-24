@@ -18,7 +18,7 @@ int	main(int ac, char **av)
 		std::cerr << "Wrong input" << std::endl;
 		return (-1);
 	}
-	PmergeMe<std::vector<int> >container1(ac, av);	
+	PmergeMe<std::vector<int>, std::vector<std::pair<int, int> > >container1(ac, av);	
 	container1.sortNbr(1);
 	std::cout << "***FIN***" << std::endl;
 	container1.printList();

@@ -20,14 +20,14 @@
 #define PINK "\001\x1b[38;2;255;105;180m\002"
 #define RESET "\001\x1b[0m\002"
 
-template<typename T>
+template<typename T, typename Tpair>
 class	PmergeMe
 {
 	private :
-		T	_listNbr;
-		T	_main;
-		T	_pend;
-		T	_odd;
+		T		_listNbr;
+		T		_main;
+		Tpair	_pend;
+		T		_odd;
 		//int	_level;
 
 		PmergeMe();
