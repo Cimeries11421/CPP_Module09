@@ -1,6 +1,6 @@
 #include "PmergeMe.hpp"
 #include <iostream>
-#include <cstring>  // Pour strlen
+#include <cstring>
 
 template<typename T, typename Tpair>
 PmergeMe<T, Tpair>::PmergeMe() {}
@@ -97,8 +97,6 @@ void	PmergeMe<T, Tpair>::fillMainPendOdd(size_t lvl)
 	}
 }
 
-//cherche ou mettre la valeur de pend dans le main et l'insere, puis pareil avec la vraie liste
-//mais avec la paire associee.
 template<typename T, typename Tpair>
 void	PmergeMe<T, Tpair>::jacobsthal(void)
 {
@@ -144,9 +142,7 @@ void	PmergeMe<T, Tpair>::insertIntoMain(size_t lvl)
 	this->jacobsthal();
 	while (i < _pend.size())
 	{
-		//_main.begin() + _pend[i].second + 2 + count;
-		//_main.begin() + i + 2 + count
-		posMain = upper_bound(_main.begin(), _main.begin() + _pend[i].second + 2 + count, _pend[i].first); //i + 2 > posA of B
+		posMain = upper_bound(_main.begin(), _main.begin() + _pend[i].second + 2 + count, _pend[i].first);
 		this->insertElementsIntoList(lvl, *posMain, _pend[i].first);
 		_main.insert(posMain, _pend[i].first); 
 		++i;
@@ -158,8 +154,7 @@ void	PmergeMe<T, Tpair>::insertIntoMain(size_t lvl)
 		posMain = upper_bound(_main.begin(), _main.end(), _odd[i]);
 		if (posMain == _main.end())
 		{
-			++i; // pose probleme ?  12 25 36 66 102
-				 //placer à la fin ? 
+			++i;
 			continue ;
 		}
 		this->insertElementsIntoList(lvl, *posMain, _odd[i]);
@@ -168,8 +163,6 @@ void	PmergeMe<T, Tpair>::insertIntoMain(size_t lvl)
 	}
 }
 
-//Cherche la paire du pend dans la liste a partie de la valeur, trouve ensuite sa future position 
-//par la position du nombre superieur a la valeur, et echange les places des paires.
 template<typename T, typename Tpair>
 void	PmergeMe<T, Tpair>::insertElementsIntoList(size_t lvl, int valueA, int valueB)
 {
@@ -179,7 +172,7 @@ void	PmergeMe<T, Tpair>::insertElementsIntoList(size_t lvl, int valueA, int valu
 
 	for (size_t i = 0; i < _listNbr.size(); ++i)
 	{
-		if (_listNbr[i] == valueB )//&& (i + 1) % lvl == 0)
+		if (_listNbr[i] == valueB )
 			posB = i;
 	}
 	size_t	groupB_start = posB - (lvl - 1);
@@ -187,14 +180,14 @@ void	PmergeMe<T, Tpair>::insertElementsIntoList(size_t lvl, int valueA, int valu
 	{
 		groupB[i] = _listNbr[groupB_start + i];
 	}
-	_listNbr.erase(_listNbr.begin() + groupB_start, _listNbr.begin() + groupB_start + lvl); //lvl 1 ? 
+	_listNbr.erase(_listNbr.begin() + groupB_start, _listNbr.begin() + groupB_start + lvl);
 
 	for (size_t i = 0; i < _listNbr.size(); ++i)
 	{
-		if (_listNbr[i] == valueA)// && (i + 1) % lvl == 0)
+		if (_listNbr[i] == valueA)
 		{
 			posA = i;
-			break; // si doublon prend le premier et break, pour éviter d'avoir celui d'apres
+			break;
 		}
 	}
 	size_t	groupA_start = posA - (lvl - 1);
@@ -212,33 +205,6 @@ void PmergeMe<T, Tpair>::printList(void)
 	std::cout << std::endl;
 }
 
-//ENLEVERRR
-template<typename T, typename Tpair>
-void PmergeMe<T, Tpair>::printMainPend(void)
-{
-	std::cout << "Main : ";
-    for (size_t i = 0; i < _main.size(); ++i)
-    {
-        std::cout << _main[i] << " ";
-    }
-    std::cout << std::endl;
-
-	std::cout << "Pend : ";
-    for (size_t i = 0; i < _pend.size(); ++i)
-    {
-        std::cout << _pend[i].first << " ";
-    }
-    std::cout << std::endl;
-
-	std::cout << "Odd : ";
-    for (size_t i = 0; i < _odd.size(); ++i)
-    {
-        std::cout << _odd[i] << " ";
-    }
-    std::cout << std::endl;
-}
-
-
-
 // Instanciation explicite pour std::vector<int>
 template class PmergeMe<std::vector<int>, std::vector<std::pair<int, int> > >;
+template class PmergeMe<std::deque<int>, std::deque<std::pair<int, int> > >;

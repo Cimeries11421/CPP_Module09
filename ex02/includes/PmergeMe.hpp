@@ -2,6 +2,7 @@
 #define P_H
 
 #include <vector>
+#include <deque>
 #include <utility>
 #include <cstdlib>
 #include <sstream>
@@ -28,7 +29,6 @@ class	PmergeMe
 		T		_main;
 		Tpair	_pend;
 		T		_odd;
-		//int	_level;
 
 		PmergeMe();
 		PmergeMe(const PmergeMe &other);
@@ -44,9 +44,7 @@ class	PmergeMe
 		void	swapElement(size_t index1, size_t index2);
 		void	insertIntoMain(size_t lvl);
 		void	insertElementsIntoList(size_t lvl, int biggerValue, int value);
-
 		void	printList(void);
-		void	printMainPend(void);
 };
 
 #endif
