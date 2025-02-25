@@ -83,9 +83,11 @@ void	PmergeMe<T, Tpair>::fillMainPendOdd(size_t lvl)
 		_main.push_back(_listNbr[y]);
 		y += lvl * 2;
 		if (x > lvl - 1)
+		{
 			_pend.push_back(std::make_pair(_listNbr[x], i));
+			++i;
+		}
 		x += lvl * 2;
-		++i;
 	}
 	i = x;
 	while (i < _listNbr.size())
@@ -97,20 +99,6 @@ void	PmergeMe<T, Tpair>::fillMainPendOdd(size_t lvl)
 
 //cherche ou mettre la valeur de pend dans le main et l'insere, puis pareil avec la vraie liste
 //mais avec la paire associee.
-template<typename T, typename Tpair>
-void	PmergeMe<T, Tpair>::swapElement(size_t index1, size_t index2)
-{
-	size_t	x = index1;
-	size_t	y = index2;
-
-	while (x < y)
-	{
-		std::swap(_pend[x - 1].first, _pend[y - 2].first);
-		x++;
-		y--;
-	}
-}
-
 template<typename T, typename Tpair>
 void	PmergeMe<T, Tpair>::jacobsthal(void)
 {
@@ -127,6 +115,21 @@ void	PmergeMe<T, Tpair>::jacobsthal(void)
 			index2 = index3;
 			this->swapElement(index1, index2);
 		}
+	}
+}
+
+template<typename T, typename Tpair>
+void	PmergeMe<T, Tpair>::swapElement(size_t index1, size_t index2)
+{
+	size_t	x = index1;
+	size_t	y = index2;
+
+	while (x < y)
+	{
+		std::swap(_pend[x - 1].first, _pend[y - 2].first);
+		std::swap(_pend[x - 1].second, _pend[y - 2].second);
+		x++;
+		y--;
 	}
 }
 
