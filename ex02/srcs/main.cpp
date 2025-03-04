@@ -10,7 +10,7 @@ int	parseInput(int ac, char **av);
 
 int	main(int ac, char **av)
 {
-	if (ac < 1)
+	if (ac <= 1)
 	{
 		std::cerr << "need at least ONE argument" << std::endl;
 		return (1);
@@ -33,7 +33,7 @@ int	main(int ac, char **av)
 		<< time << " us" << std::endl;
 
 	clock_t	start2 = clock();
-	PmergeMe<std::vector<int>, std::vector<std::pair<int, int> > >container2(ac, av);
+	PmergeMe<std::deque<int>, std::deque<std::pair<int, int> > >container2(ac, av);
 	container2.sortNbr(1);
 	clock_t	end2 = clock();
 	double	time2 = double(end2 - start2) / CLOCKS_PER_SEC;
@@ -46,7 +46,7 @@ int	main(int ac, char **av)
 
 int	parseInput(int ac, char **av)
 {
-	long	tmp_tab[ac - 2]; //-1
+	long	tmp_tab[ac - 1];
 
 	for (int j = 1; j < ac; ++j)
 	{
@@ -54,11 +54,12 @@ int	parseInput(int ac, char **av)
 		{
 			if (av[j][i] < '0' || av[j][i] > '9')
 			{
+				std::cerr << "Wrong Input" << std::endl;
 				return (-1);
 			}
 		}
 		char *endstr;
-		tmp_tab[j - 1] =  strtol(av[j], &endstr, 10); //simplifier
+		tmp_tab[j - 1] =  strtol(av[j], &endstr, 10);
 		if (tmp_tab[j - 1] > INT_MAX)
 		{
 			std::cerr << "Wrong Input : int max limit reached" << std::endl;
