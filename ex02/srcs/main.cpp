@@ -5,6 +5,7 @@
 #include <cstring>
 #include <climits>
 #include <ctime>
+#include <iomanip>
 
 int	parseInput(int ac, char **av);
 
@@ -25,21 +26,21 @@ int	main(int ac, char **av)
 	container1.printList();
 	container1.sortNbr(1);
 	clock_t	end = clock();
-	double	time = double(end - start) / CLOCKS_PER_SEC;
+	double	time = double(end - start) * 1000000 / CLOCKS_PER_SEC;
 	
 	std::cout << "After  : "; 
 	container1.printList();
 	std::cout << "Time to process a range of " << ac - 1 << " elements with std::vector "
-		<< time << " us" << std::endl;
+	<< time << " us" << std::endl;
 
 	clock_t	start2 = clock();
 	PmergeMe<std::deque<int>, std::deque<std::pair<int, int> > >container2(ac, av);
 	container2.sortNbr(1);
 	clock_t	end2 = clock();
-	double	time2 = double(end2 - start2) / CLOCKS_PER_SEC;
+	double	time2 = double(end2 - start2) * 100000 / CLOCKS_PER_SEC;
 	
 	std::cout << "Time to process a range of " << ac - 1 << " elements with std::deque "
-		<< time2 << " us" << std::endl;
+	<< time2 << " us" << std::endl;
 
 	return (0);
 }
