@@ -1,12 +1,11 @@
-NAME = btc
+NAME = BitcoinExchange
 
 CXX = c++
 
 CXXFLAGS = -Wall -Wextra -Werror -Iincludes -std=c++98
 
 SRCS = main.cpp \
-	   Exchange.cpp \
-	   searchBase.cpp \
+	   BitcoinExchange.cpp \
 
 SRC = $(addprefix srcs/, $(SRCS))
 

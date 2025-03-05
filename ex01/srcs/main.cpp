@@ -4,18 +4,18 @@
 
 int	main(int ac, char **av)
 {
-	RPN	stack;
-	std::string	str(av[1]);
-
 	if (ac != 2)
 	{
 		std::cerr << "Need ONE argument" << std::endl;
 		return (1);
 	}
+	RPN	stack;
+	std::string	str(av[1]);
+	
 	if (parseInput(str) == -1)
 	{
 		std::cerr << "Wrong Input" << std::endl;
-		return (-1);
+		return (1);
 	}
 	for (size_t i = 0; i < str.size(); ++i)
 	{
@@ -28,7 +28,18 @@ int	main(int ac, char **av)
 		else if (str[i] == '*')
 			stack.multiplyNumbers();
 		else if (str[i] == '/')
-			stack.divideNumbers();
+		{
+			try 
+			{
+				stack.divideNumbers();
+			}
+			catch (std::exception &ref)
+			{
+				std::cout << ref.what() << std::endl;
+				return (1);
+			}
+		}
 	}
 	std::cout << stack.returnResult() << std::endl;
+	return (0);
 }

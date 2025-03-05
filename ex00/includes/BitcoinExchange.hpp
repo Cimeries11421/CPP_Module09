@@ -11,7 +11,7 @@ class	ErrorOpen : public std::exception
 		{
 			const char* what() const throw()
 			{
-				return ("File can't be open");
+				return ("Error : File can't be open");
 			}
 		};
 
@@ -36,8 +36,6 @@ class	Exchange
 				return ("There is no inferior or equivalent date");
 			}
 		};
-
-		void	printBase(void);
 };
 
 void	searchBase(char	*inputFile, Exchange &base);

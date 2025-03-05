@@ -4,6 +4,7 @@
 #include <stack>
 #include <cstdlib>
 #include <string>
+#include <stdexcept>
 
 int	parseInput(const std::string &str);
 

@@ -1,12 +1,16 @@
-#include "Exchange.hpp"
+#include "BitcoinExchange.hpp"
 
 Exchange::Exchange()
 {
 	_file.open("data.csv");
 	if (_file.is_open() == false)
+	{
+		std::cout << "Need data.csv" << std::endl;
 		throw ErrorOpen();
+	}
 	else
 		this->fillBase();
+	_file.close();
 }
 
 Exchange::Exchange(const Exchange &other)
@@ -57,15 +61,4 @@ std::string	Exchange::findCloserDate(const std::string &key)
 float	Exchange::operator[](const std::string &key)
 {
 	return (_base[key]);
-}
-
-void	Exchange::printBase(void)
-{
-	std::map<std::string, float>::iterator	it = _base.begin();
-	std::map<std::string, float>::iterator	it_end = _base.end();
-	while (it != it_end)
-	{
-		std::cout << it->first << " : "<< it->second <<  std::endl;
-		++it;
-	}
 }

@@ -65,6 +65,8 @@ void	RPN::divideNumbers(void)
 	int	result;
 
 	nbr = this->_stack.top();
+	if (nbr == 0)
+		throw std::invalid_argument("Error : Can't divide by 0");
 	this->_stack.pop();
 	result = this->_stack.top() / nbr;
 	this->_stack.pop();
