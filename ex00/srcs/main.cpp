@@ -42,6 +42,8 @@ void	searchBase(char	*inputFile, Exchange &base)
 		std::cout << "Error: first line syntax not valid." << std::endl;
 	while (getline(input, str))
 	{
+		if (str.empty() == true)
+			continue;
 		if (str.size() < 14 || checkFormat(str) == -1)
 		{
 			std::cout << "Error: bad input => " << str << std::endl;
@@ -51,7 +53,7 @@ void	searchBase(char	*inputFile, Exchange &base)
 		if (checkDate(date) == -1)
 		{
 			std::cout << "Error: bad input => " << str << std::endl;
-			continue ;
+			continue;
 		}
 		closerDate = base.findCloserDate(date);
 		nbrBits = atof(str.substr(13, str.size() - 1).c_str());
@@ -63,7 +65,7 @@ void	searchBase(char	*inputFile, Exchange &base)
 		if (nbrBits < 0)
 		{
 			std::cout << "Error: not a positive number." << std::endl;
-			continue ;
+			continue;
 		}
 		std::cout << date << " => " << nbrBits << " = " << base[closerDate] * nbrBits << std::endl;
 	}
@@ -72,7 +74,11 @@ void	searchBase(char	*inputFile, Exchange &base)
 
 static int	checkFormat(const std::string &str)
 {
-	for (unsigned long i = 0; i < str.size(); ++i)
+	unsigned long i = 0;
+	bool	dot = false;
+
+	(void)dot;
+	while (i < 14)
 	{
 		if ((i == 4 || i == 7) && str[i] != '-')
 			return (-1);
@@ -82,10 +88,17 @@ static int	checkFormat(const std::string &str)
 			return (-1);
 		if ((i < 4 || i == 5 || i == 6 || i == 8 || i == 9 || i == 13) && (str[i] < '0' || str[i] > '9'))
 			return (-1);
-		if (i == 14 && (str[i] != '.' && (str[i] < '0' || str[i] > '9' )))
+		++i;
+	}
+	while (i < str.size())
+	{
+		if (str[i] == '.' && dot == false)
+			dot = true;
+		else if (str[i] == '.' && dot == true)
 			return (-1);
-		if (i >= 15 && (str[i] < '0' || str[i] > '9' ))
+		if (str[i] != '.' && (str[i] < '0' || str[i] > '9'))
 			return (-1);
+		++i;
 	}
 	return (0);
 }

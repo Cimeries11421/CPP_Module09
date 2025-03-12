@@ -15,13 +15,15 @@ Exchange::Exchange()
 
 Exchange::Exchange(const Exchange &other)
 {
-	(void)other;
+	*this = other;
 }
 
 Exchange	&Exchange::operator=(const Exchange &other)
 {
 	if (this != &other)
 	{
+		_base = other._base;
+		_file = other._file;
 		return (*this);
 	}
 	return (*this);
