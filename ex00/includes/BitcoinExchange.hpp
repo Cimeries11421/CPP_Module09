@@ -27,9 +27,10 @@ class	Exchange
 	public :
 		Exchange(const std::string &file);
 		~Exchange();
-		void		fillBase(std::ifstream file);
+		void		fillBase(std::ifstream &file);
+		bool		isLineValid(std::string str);
 		std::string	findCloserDate(const std::string &key);
-		float	operator[](const std::string &key);
+		float		operator[](const std::string &key);
 		class	NoEquivalentDate : public std::exception
 		{
 			const char* what() const throw()

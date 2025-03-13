@@ -74,10 +74,9 @@ void	searchBase(char	*inputFile, Exchange &base)
 
 static int	checkFormat(const std::string &str)
 {
-	unsigned long i = 0;
+	size_t i = 0;
 	bool	dot = false;
 
-	(void)dot;
 	while (i < 14)
 	{
 		if ((i == 4 || i == 7) && str[i] != '-')
