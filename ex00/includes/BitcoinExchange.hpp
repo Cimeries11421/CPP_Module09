@@ -20,7 +20,7 @@ class	Exchange
 	private :
 		std::map<std::string, float>	_base;
 
-	//	Echange();
+		Echange();
 		Exchange(const Exchange &other);
 		Exchange	&operator=(const Exchange &other);
 	
@@ -28,7 +28,6 @@ class	Exchange
 		Exchange(const std::string &file);
 		~Exchange();
 		void		fillBase(std::ifstream &file);
-		bool		isLineValid(std::string str);
 		std::string	findCloserDate(const std::string &key);
 		float		operator[](const std::string &key);
 		class	NoEquivalentDate : public std::exception

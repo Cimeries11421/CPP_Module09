@@ -21,7 +21,7 @@ int main(int ac, char **av)
 	}
 	catch (std::exception &ref)
 	{
-		std::cout << ref.what() << std::endl;
+		std::cout << "Error : "<< ref.what() << std::endl;
 	}
 	return (0);
 }
