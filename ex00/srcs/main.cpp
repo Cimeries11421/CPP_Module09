@@ -16,7 +16,7 @@ int main(int ac, char **av)
 	}
 	try
 	{
-		Exchange	base;
+		Exchange	base("data.csv");
 		searchBase(av[1], base);
 	}
 	catch (std::exception &ref)

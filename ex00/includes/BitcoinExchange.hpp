@@ -19,14 +19,15 @@ class	Exchange
 {
 	private :
 		std::map<std::string, float>	_base;
-		std::ifstream					_file;
+
+	//	Echange();
 		Exchange(const Exchange &other);
 		Exchange	&operator=(const Exchange &other);
 	
 	public :
-		Exchange();
+		Exchange(const std::string &file);
 		~Exchange();
-		void		fillBase(void);
+		void		fillBase(std::ifstream file);
 		std::string	findCloserDate(const std::string &key);
 		float	operator[](const std::string &key);
 		class	NoEquivalentDate : public std::exception

@@ -1,16 +1,17 @@
 #include "BitcoinExchange.hpp"
 
-Exchange::Exchange()
+Exchange::Exchange(const std::string &file_str)
 {
-	_file.open("data.csv");
-	if (_file.is_open() == false)
+	std::ifstream	file;
+	file.open(file_str.c_str());
+	if (file.is_open() == false)
 	{
 		std::cout << "Need data.csv" << std::endl;
 		throw ErrorOpen();
 	}
 	else
-		this->fillBase();
-	_file.close();
+		this->fillBase(file);
+	file.close();
 }
 
 Exchange::Exchange(const Exchange &other)
@@ -23,7 +24,6 @@ Exchange	&Exchange::operator=(const Exchange &other)
 	if (this != &other)
 	{
 		_base = other._base;
-		_file = other._file;
 		return (*this);
 	}
 	return (*this);
@@ -31,14 +31,14 @@ Exchange	&Exchange::operator=(const Exchange &other)
 
 Exchange::~Exchange() {}
 
-void	Exchange::fillBase(void)
+void	Exchange::fillBase(std::ifstream file)
 {
 	std::string	str;
 	std::string	key;
 	float		value;
 
-	getline(this->_file, str);
-	while (getline(this->_file, str))
+	getline(file, str);
+	while (getline(file, str))
 	{
 		if (str.size() > 10)
 		{
