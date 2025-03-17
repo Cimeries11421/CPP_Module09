@@ -20,7 +20,7 @@ class	Exchange
 	private :
 		std::map<std::string, float>	_base;
 
-		Echange();
+		Exchange();
 		Exchange(const Exchange &other);
 		Exchange	&operator=(const Exchange &other);
 	
